@@ -62,7 +62,7 @@ public class UsuarioController {
 
     @PutMapping("/me")
     public ResponseEntity<ApiResponse<UsuarioDTO>> update(@Valid @RequestBody UsuarioUpdateDTO in,
-                                                            Principal principal) {
+                                                          Principal principal) {
         String email = principal.getName();
 
         return ResponseBuilder.ok("Se ha editado correctamente el usuario.",

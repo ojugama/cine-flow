@@ -74,7 +74,6 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado con email " + email + "."));
     }
 
-
     @Override
     @Transactional
     public UsuarioEntity update(String email, UsuarioEntity in) {
