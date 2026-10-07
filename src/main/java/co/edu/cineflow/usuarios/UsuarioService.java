@@ -4,13 +4,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UsuarioService {
-    UsuarioEntity create(UsuarioEntity usuario);
+    UsuarioEntity create(UsuarioEntity in);
 
     UsuarioEntity findById(Long id);
 
     Page<UsuarioEntity> findAll(Pageable pageable);
 
-    UsuarioEntity update(Long id, UsuarioEntity usuario);
+    UsuarioEntity update(Long id, UsuarioEntity in);
 
     void delete(Long id);
+
+    void updatePassword(String email, UsuarioPasswordUpdateDTO in);
 }

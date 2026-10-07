@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("api/usuarios")
 public class UsuarioController {
@@ -36,7 +38,8 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<UsuarioDTO>> update(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateDTO in) {
+    public ResponseEntity<ApiResponse<UsuarioDTO>> update(@PathVariable Long id,
+                                                          @Valid @RequestBody UsuarioUpdateDTO in) {
         return ResponseBuilder.ok("Se ha editado correctamente el usuario.", usuarioHandler.update(id, in));
     }
 
@@ -45,5 +48,14 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         usuarioHandler.delete(id);
         return ResponseBuilder.ok("Se ha eliminado correctamente el usuario.");
+    }
+
+    @PatchMapping("/me/password")
+    public ResponseEntity<ApiResponse<Void>> updatePassword(@Valid @RequestBody UsuarioPasswordUpdateDTO in,
+                                                            Principal principal) {
+        String email = principal.getName();
+
+        usuarioHandler.updatePassword(email, in);
+        return ResponseBuilder.ok("Se ha actualizado correctamente la contraseña.");
     }
 }

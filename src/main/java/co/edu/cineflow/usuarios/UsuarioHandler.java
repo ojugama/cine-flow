@@ -56,4 +56,8 @@ public class UsuarioHandler {
     public void delete(Long id) {
         usuarioService.delete(id);
     }
+
+    public void updatePassword(String email, UsuarioPasswordUpdateDTO in) {
+        usuarioService.updatePassword(email, in);
+    }
 }

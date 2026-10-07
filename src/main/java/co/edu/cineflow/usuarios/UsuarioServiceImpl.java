@@ -67,4 +67,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         usuarioRepository.delete(existingUsuario);
     }
+
+    @Override
+    @Transactional
+    public void updatePassword(String email, UsuarioPasswordUpdateDTO in) {
+        UsuarioEntity usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado con email " + email + "."));
+
+        if (!passwordEncoder.matches(in.getCurrentPassword(), usuario.getPassword())) {
+            throw new BusinessException("La contraseña actual es incorrecta.");
+        }
+
+        usuario.setPassword(passwordEncoder.encode(in.getNewPassword()));
+
+        usuarioRepository.save(usuario);
+    }
 }
