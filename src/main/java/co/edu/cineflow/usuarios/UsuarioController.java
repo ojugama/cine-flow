@@ -7,6 +7,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,6 +39,7 @@ public class UsuarioController {
         return ResponseBuilder.created("Se ha editado correctamente el usuario.", usuarioHandler.update(id, in));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         usuarioHandler.delete(id);

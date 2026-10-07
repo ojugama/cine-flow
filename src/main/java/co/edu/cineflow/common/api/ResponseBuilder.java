@@ -32,6 +32,11 @@ public class ResponseBuilder {
                 .body(new ApiResponse<>(false, message, null));
     }
 
+    public static ResponseEntity<ApiResponse<Object>> forbidden(String message) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ApiResponse<>(false, message, null));
+    }
+
     public static ResponseEntity<ApiResponse<Object>> internalError(String message) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ApiResponse<>(false, message, null));
