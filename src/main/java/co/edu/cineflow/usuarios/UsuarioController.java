@@ -29,6 +29,7 @@ public class UsuarioController {
         return ResponseBuilder.ok("OK", usuarioHandler.findById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<ApiResponse<Page<UsuarioDTO>>> findAll(@ParameterObject Pageable pageable) {
         return ResponseBuilder.ok("OK", usuarioHandler.findAll(pageable));
@@ -36,7 +37,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<UsuarioDTO>> update(@PathVariable Long id, @Valid @RequestBody UsuarioUpdateDTO in) {
-        return ResponseBuilder.created("Se ha editado correctamente el usuario.", usuarioHandler.update(id, in));
+        return ResponseBuilder.ok("Se ha editado correctamente el usuario.", usuarioHandler.update(id, in));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
