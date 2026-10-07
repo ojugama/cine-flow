@@ -1,0 +1,31 @@
+package co.edu.cineflow.config;
+
+import co.edu.cineflow.usuarios.UsuarioEntity;
+import co.edu.cineflow.usuarios.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Configuration
+public class AdminSeeder {
+    @Value("${ADMIN_PASSWORD}")
+    private String adminPassword;
+
+    @Bean
+    public CommandLineRunner initAdmin(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        return args -> {
+            if (!usuarioRepository.existsByEmail("admin@cineflow.edu.co")) {
+                UsuarioEntity admin = new UsuarioEntity();
+                admin.setEmail("admin@cineflow.edu.co");
+                admin.setPassword(passwordEncoder.encode(adminPassword));
+                admin.setRol("ADMIN");
+                admin.setNombres("Administrador");
+                admin.setApellidos("Principal");
+
+                usuarioRepository.save(admin);
+            }
+        };
+    }
+}
