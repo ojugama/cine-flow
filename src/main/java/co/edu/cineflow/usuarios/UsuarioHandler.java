@@ -57,6 +57,10 @@ public class UsuarioHandler {
         usuarioService.delete(id);
     }
 
+    public UsuarioDTO findMe(String email) {
+        return toDto(usuarioService.findByEmail(email));
+    }
+
     public UsuarioDTO update(String email, UsuarioUpdateDTO in) {
         UsuarioEntity usuarioEntity = new UsuarioEntity();
 

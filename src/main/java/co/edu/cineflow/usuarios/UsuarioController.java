@@ -26,6 +26,7 @@ public class UsuarioController {
         return ResponseBuilder.created("Se ha creado correctamente el usuario.", usuarioHandler.create(in));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{id}")
     public ResponseEntity<ApiResponse<UsuarioDTO>> findById(@PathVariable Long id) {
         return ResponseBuilder.ok("OK", usuarioHandler.findById(id));
@@ -49,6 +50,14 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         usuarioHandler.delete(id);
         return ResponseBuilder.ok("Se ha eliminado correctamente el usuario.");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UsuarioDTO>> findMe(Principal principal) {
+        String email = principal.getName();
+
+        return ResponseBuilder.ok("Se ha editado correctamente el usuario.",
+                usuarioHandler.findMe(email));
     }
 
     @PutMapping("/me")
