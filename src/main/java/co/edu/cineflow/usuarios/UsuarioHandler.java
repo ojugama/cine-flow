@@ -57,6 +57,16 @@ public class UsuarioHandler {
         usuarioService.delete(id);
     }
 
+    public UsuarioDTO update(String email, UsuarioUpdateDTO in) {
+        UsuarioEntity usuarioEntity = new UsuarioEntity();
+
+        usuarioEntity.setEmail(in.getEmail());
+        usuarioEntity.setNombres(in.getNombres());
+        usuarioEntity.setApellidos(in.getApellidos());
+
+        return toDto(usuarioService.update(email, usuarioEntity));
+    }
+
     public void updatePassword(String email, UsuarioPasswordUpdateDTO in) {
         usuarioService.updatePassword(email, in);
     }

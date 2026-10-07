@@ -21,16 +21,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioEntity create(UsuarioEntity usuario) {
-        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+    public UsuarioEntity create(UsuarioEntity in) {
+        if (usuarioRepository.existsByEmail(in.getEmail())) {
             throw new BusinessException("El email ya se encuentra registrado.");
         }
 
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        in.setPassword(passwordEncoder.encode(in.getPassword()));
 
-        usuario.setRol("CLIENTE");
+        in.setRol("CLIENTE");
 
-        return usuarioRepository.save(usuario);
+        return usuarioRepository.save(in);
     }
 
     @Override
@@ -46,16 +46,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public UsuarioEntity update(Long id, UsuarioEntity usuario) {
+    public UsuarioEntity update(Long id, UsuarioEntity in) {
         UsuarioEntity existingUsuario = findById(id);
 
-        if (usuarioRepository.existsByEmailAndIdNot(usuario.getEmail(), id)) {
+        if (usuarioRepository.existsByEmailAndIdNot(in.getEmail(), id)) {
             throw new BusinessException("El email ya se encuentra registrado.");
         }
 
-        existingUsuario.setEmail(usuario.getEmail());
-        existingUsuario.setNombres(usuario.getNombres());
-        existingUsuario.setApellidos(usuario.getApellidos());
+        existingUsuario.setEmail(in.getEmail());
+        existingUsuario.setNombres(in.getNombres());
+        existingUsuario.setApellidos(in.getApellidos());
 
         return usuarioRepository.save(existingUsuario);
     }
@@ -69,10 +69,32 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public UsuarioEntity findByEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado con email " + email + "."));
+    }
+
+
+    @Override
+    @Transactional
+    public UsuarioEntity update(String email, UsuarioEntity in) {
+        UsuarioEntity usuario = findByEmail(email);
+
+        if (usuarioRepository.existsByEmailAndIdNot(in.getEmail(), usuario.getId())) {
+            throw new BusinessException("El email ya se encuentra registrado.");
+        }
+
+        usuario.setEmail(in.getEmail());
+        usuario.setNombres(in.getNombres());
+        usuario.setApellidos(in.getApellidos());
+
+        return usuarioRepository.save(usuario);
+    }
+
+    @Override
     @Transactional
     public void updatePassword(String email, UsuarioPasswordUpdateDTO in) {
-        UsuarioEntity usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Usuario no encontrado con email " + email + "."));
+        UsuarioEntity usuario = findByEmail(email);
 
         if (!passwordEncoder.matches(in.getCurrentPassword(), usuario.getPassword())) {
             throw new BusinessException("La contraseña actual es incorrecta.");

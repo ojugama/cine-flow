@@ -37,6 +37,7 @@ public class UsuarioController {
         return ResponseBuilder.ok("OK", usuarioHandler.findAll(pageable));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<UsuarioDTO>> update(@PathVariable Long id,
                                                           @Valid @RequestBody UsuarioUpdateDTO in) {
@@ -48,6 +49,15 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         usuarioHandler.delete(id);
         return ResponseBuilder.ok("Se ha eliminado correctamente el usuario.");
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<ApiResponse<UsuarioDTO>> update(@Valid @RequestBody UsuarioUpdateDTO in,
+                                                            Principal principal) {
+        String email = principal.getName();
+
+        return ResponseBuilder.ok("Se ha editado correctamente el usuario.",
+                usuarioHandler.update(email, in));
     }
 
     @PatchMapping("/me/password")

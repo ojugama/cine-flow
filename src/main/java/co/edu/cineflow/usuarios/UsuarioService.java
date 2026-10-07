@@ -14,5 +14,9 @@ public interface UsuarioService {
 
     void delete(Long id);
 
+    UsuarioEntity findByEmail(String email);
+
+    UsuarioEntity update(String email, UsuarioEntity in);
+
     void updatePassword(String email, UsuarioPasswordUpdateDTO in);
 }
