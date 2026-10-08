@@ -20,6 +20,7 @@ public class UsuarioHandler {
         usuarioDTO.setRol(usuarioEntity.getRol());
         usuarioDTO.setNombres(usuarioEntity.getNombres());
         usuarioDTO.setApellidos(usuarioEntity.getApellidos());
+        usuarioDTO.setIsActivo(usuarioEntity.getIsActivo());
 
         return usuarioDTO;
     }
@@ -69,6 +70,10 @@ public class UsuarioHandler {
         usuarioEntity.setApellidos(in.getApellidos());
 
         return toDto(usuarioService.update(email, usuarioEntity));
+    }
+
+    public void delete(String email) {
+        usuarioService.delete(email);
     }
 
     public void updatePassword(String email, UsuarioPasswordUpdateDTO in) {

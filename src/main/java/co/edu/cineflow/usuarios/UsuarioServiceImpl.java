@@ -41,7 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Page<UsuarioEntity> findAll(Pageable pageable) {
-        return usuarioRepository.findAll(pageable);
+        return usuarioRepository.findAllByIsActivoTrue(pageable);
     }
 
     @Override
@@ -64,8 +64,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public void delete(Long id) {
         UsuarioEntity existingUsuario = findById(id);
-
-        usuarioRepository.delete(existingUsuario);
+        existingUsuario.setIsActivo(false);
+        usuarioRepository.save(existingUsuario);
     }
 
     @Override
@@ -88,6 +88,14 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setApellidos(in.getApellidos());
 
         return usuarioRepository.save(usuario);
+    }
+
+    @Override
+    @Transactional
+    public void delete(String email) {
+        UsuarioEntity usuario = findByEmail(email);
+        usuario.setIsActivo(false);
+        usuarioRepository.save(usuario);
     }
 
     @Override

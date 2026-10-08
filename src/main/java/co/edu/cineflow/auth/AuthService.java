@@ -25,6 +25,10 @@ public class AuthService {
         UsuarioEntity usuario = usuarioRepository.findByEmail(in.getEmail())
                 .orElseThrow(() -> new BusinessException("Las credenciales son inválidas."));
 
+        if (!usuario.getIsActivo()) {
+            throw new BusinessException("Las credenciales son inválidas.");
+        }
+
         if (!passwordEncoder.matches(in.getPassword(), usuario.getPassword())) {
             throw new BusinessException("Las credenciales son inválidas.");
         }

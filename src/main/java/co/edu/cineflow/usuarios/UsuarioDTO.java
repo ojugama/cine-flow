@@ -13,4 +13,5 @@ public class UsuarioDTO {
     private String rol;
     private String nombres;
     private String apellidos;
+    private Boolean isActivo;
 }

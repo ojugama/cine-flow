@@ -18,5 +18,7 @@ public interface UsuarioService {
 
     UsuarioEntity update(String email, UsuarioEntity in);
 
+    void delete(String email);
+
     void updatePassword(String email, UsuarioPasswordUpdateDTO in);
 }

@@ -46,10 +46,10 @@ public class UsuarioController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("{id}")
+    @PatchMapping("{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         usuarioHandler.delete(id);
-        return ResponseBuilder.ok("Se ha eliminado correctamente el usuario.");
+        return ResponseBuilder.ok("Se ha desactivado correctamente el usuario.");
     }
 
     @GetMapping("/me")
@@ -67,6 +67,14 @@ public class UsuarioController {
 
         return ResponseBuilder.ok("Se ha editado correctamente el usuario.",
                 usuarioHandler.update(email, in));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/me")
+    public ResponseEntity<ApiResponse<Void>> delete(Principal principal) {
+        String email = principal.getName();
+        usuarioHandler.delete(email);
+        return ResponseBuilder.ok("Se ha eliminado correctamente la cuenta.");
     }
 
     @PatchMapping("/me/password")

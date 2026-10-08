@@ -24,4 +24,6 @@ public class UsuarioEntity {
     private String nombres;
     @Column(name = "apellidos")
     private String apellidos;
+    @Column(name = "is_activo")
+    private Boolean isActivo = true;
 }
