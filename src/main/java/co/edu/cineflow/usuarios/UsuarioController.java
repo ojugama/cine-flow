@@ -69,7 +69,6 @@ public class UsuarioController {
                 usuarioHandler.update(email, in));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/me")
     public ResponseEntity<ApiResponse<Void>> delete(Principal principal) {
         String email = principal.getName();
