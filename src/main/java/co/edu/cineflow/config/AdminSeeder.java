@@ -16,7 +16,7 @@ public class AdminSeeder {
     @Bean
     public CommandLineRunner initAdmin(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            if (!usuarioRepository.existsByEmail("admin@cineflow.edu.co")) {
+            if (!usuarioRepository.existsByEmail("admin@cineflow.co")) {
                 UsuarioEntity admin = new UsuarioEntity();
                 admin.setEmail("admin@cineflow.edu.co");
                 admin.setPassword(passwordEncoder.encode(adminPassword));
