@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FuncionMapper {
-
     public FuncionEntity toEntity(FuncionCreateDTO dto) {
         FuncionEntity entity = new FuncionEntity();
         entity.setIdSala(dto.getIdSala());

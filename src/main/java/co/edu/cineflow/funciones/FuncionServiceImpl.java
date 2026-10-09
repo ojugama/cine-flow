@@ -42,7 +42,7 @@ public class FuncionServiceImpl implements FuncionService {
 
     @Override
     public FuncionEntity findById(Long id) {
-        return funcionRepository.findById(id)
+        return funcionRepository.findByIdAndIsActivoTrue(id)
                 .orElseThrow(() -> new NotFoundException("Función no encontrada con ID " + id + "."));
     }
 
