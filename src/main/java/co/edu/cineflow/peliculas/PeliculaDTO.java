@@ -1,0 +1,16 @@
+package co.edu.cineflow.peliculas;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+public class PeliculaDTO {
+    private Integer id;
+    private String titulo;
+    private String sinopsis;
+    private Integer duracionMinutos;
+    private String genero;
+}
