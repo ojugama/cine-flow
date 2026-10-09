@@ -7,11 +7,11 @@ public interface PeliculaService {
 
     PeliculaEntity create(PeliculaEntity in);
 
-    PeliculaEntity findById(Integer id);
+    PeliculaEntity findById(Long id);
 
     Page<PeliculaEntity> findAll(Pageable pageable);
 
-    PeliculaEntity update(Integer id, PeliculaEntity in);
+    PeliculaEntity update(Long id, PeliculaEntity in);
 
-    void delete(Integer id);
+    void delete(Long id);
 }

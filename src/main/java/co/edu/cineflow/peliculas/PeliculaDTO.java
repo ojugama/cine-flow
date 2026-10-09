@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PeliculaDTO {
-    private Integer id;
+    private Long id;
     private String titulo;
     private String sinopsis;
     private Integer duracionMinutos;

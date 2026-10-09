@@ -18,7 +18,7 @@ public class PeliculaHandler {
         return toDTO(peliculaService.create(entity));
     }
 
-    public PeliculaDTO findById(Integer id) {
+    public PeliculaDTO findById(Long id) {
         return toDTO(peliculaService.findById(id));
     }
 
@@ -26,12 +26,12 @@ public class PeliculaHandler {
         return peliculaService.findAll(pageable).map(this::toDTO);
     }
 
-    public PeliculaDTO update(Integer id, PeliculaUpdateDTO in) {
+    public PeliculaDTO update(Long id, PeliculaUpdateDTO in) {
         PeliculaEntity entity = toEntity(in);
         return toDTO(peliculaService.update(id, entity));
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         peliculaService.delete(id);
     }
 

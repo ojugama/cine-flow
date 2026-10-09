@@ -18,7 +18,7 @@ public class PeliculaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "El título es requerido.")
     @Size(max = 100, message = "El título debe tener máximo 100 caracteres.")

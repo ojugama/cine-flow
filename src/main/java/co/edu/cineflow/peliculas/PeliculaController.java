@@ -27,7 +27,7 @@ public class PeliculaController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<PeliculaDTO>> findById(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<PeliculaDTO>> findById(@PathVariable Long id) {
         return ResponseBuilder.ok("OK", peliculaHandler.findById(id));
     }
 
@@ -38,14 +38,14 @@ public class PeliculaController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<PeliculaDTO>> update(@PathVariable Integer id,
+    public ResponseEntity<ApiResponse<PeliculaDTO>> update(@PathVariable Long id,
                                                           @Valid @RequestBody PeliculaUpdateDTO in) {
         return ResponseBuilder.ok("Se ha editado correctamente la película.", peliculaHandler.update(id, in));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
-    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Integer id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         peliculaHandler.delete(id);
         return ResponseBuilder.ok("Se ha eliminado correctamente la película.");
     }
