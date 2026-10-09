@@ -1,29 +1,34 @@
 package co.edu.cineflow.usuarios;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.validation.constraints.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
 public class UsuarioCreateDTO {
-    @NotBlank(message = "El email es requerido." )
+    @NotBlank(message = "El email es requerido.")
     @Size(max = 50, message = "El email debe tener máximo 50 caracteres.")
-    @Email(message = "El email debe tener un formato válido.")    @Email(message = "Formato de email inválido.")
+    @Email(message = "El email debe tener un formato válido.")
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria.")
     private String password;
 
-    @NotBlank(message = "El nombre es requerido.")
-    @Size(max = 50, message = "El nombre debe tener máximo 50 caracteres.")
-    @Pattern(regexp = "^(?!\\s)(?!.*\\s$)[A-Za-zÁÉÍÓÚáéíóúñÑ'\\- ]+$", message = "El nombre solo puede contener letras, espacios intermedios, apóstrofes y guiones.")
+    @NotBlank(message = "Los nombres son obligatorios.")
+    @Size(max = 100, message = "Los nombres deben tener máximo 100 caracteres.")
+    @Pattern(regexp = "^(?!\\s)(?!.*\\s$)[A-Za-zÁÉÍÓÚáéíóúñÑ'\\- ]+$",
+            message = "Los nombres solo pueden contener letras, espacios intermedios, apóstrofes y guiones.")
     private String nombres;
-    
-    @NotBlank(message = "El apellido es requerido.")
-    @Size(max = 50, message = "El apellido debe tener máximo 50 caracteres.")
-    @Pattern(regexp = "^(?!\\s)(?!.*\\s$)[A-Za-zÁÉÍÓÚáéíóúñÑ'\\- ]+$", message = "El apellido solo puede contener letras, espacios intermedios, apóstrofes y guiones.")
+
+    @NotBlank(message = "Los apellidos son obligatorios.")
+    @Size(max = 100, message = "Los apellidos deben tener máximo 100 caracteres.")
+    @Pattern(regexp = "^(?!\\s)(?!.*\\s$)[A-Za-zÁÉÍÓÚáéíóúñÑ'\\- ]+$",
+            message = "Los apellidos solo pueden contener letras, espacios intermedios, apóstrofes y guiones.")
     private String apellidos;
 }

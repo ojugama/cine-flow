@@ -39,7 +39,7 @@ public class PeliculaController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<PeliculaDTO>> update(@PathVariable Long id,
-                                                          @Valid @RequestBody PeliculaUpdateDTO in) {
+                                                           @Valid @RequestBody PeliculaUpdateDTO in) {
         return ResponseBuilder.ok("Se ha editado correctamente la película.", peliculaHandler.update(id, in));
     }
 

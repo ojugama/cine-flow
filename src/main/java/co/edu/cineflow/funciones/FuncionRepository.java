@@ -15,12 +15,12 @@ public interface FuncionRepository extends JpaRepository<FuncionEntity, Long> {
     List<FuncionEntity> findByPeliculaIdAndIsActivoTrue(Long idPelicula);
 
     @Query("""
-        SELECT COUNT(f) > 0 
-        FROM FuncionEntity f 
-        WHERE f.idSala = :idSala 
-          AND f.isActivo = true 
-          AND (:idFuncion IS NULL OR f.id != :idFuncion)
-          AND (f.fechaHoraInicio < :fin AND f.fechaHoraFin > :inicio)
-    """)
+                SELECT COUNT(f) > 0 
+                FROM FuncionEntity f 
+                WHERE f.idSala = :idSala 
+                  AND f.isActivo = true 
+                  AND (:idFuncion IS NULL OR f.id != :idFuncion)
+                  AND (f.fechaHoraInicio < :fin AND f.fechaHoraFin > :inicio)
+            """)
     boolean existeCruceHorario(Long idSala, LocalDateTime inicio, LocalDateTime fin, Long idFuncion);
 }
