@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class UsuarioCreateDTO {
     @NotBlank(message = "El email es requerido.")
-    @Size(max = 50, message = "El email debe tener máximo 50 caracteres.")
+    @Size(max = 100, message = "El email debe tener máximo 100 caracteres.")
     @Email(message = "El email debe tener un formato válido.")
     private String email;
 

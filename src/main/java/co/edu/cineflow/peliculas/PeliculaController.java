@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/peliculas")
 public class PeliculaController {
-
     private final PeliculaHandler peliculaHandler;
 
     public PeliculaController(PeliculaHandler peliculaHandler) {
@@ -26,7 +25,7 @@ public class PeliculaController {
         return ResponseBuilder.created("Se ha creado correctamente la película.", peliculaHandler.create(in));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<PeliculaDTO>> findById(@PathVariable Long id) {
         return ResponseBuilder.ok("OK", peliculaHandler.findById(id));
     }
@@ -44,7 +43,7 @@ public class PeliculaController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         peliculaHandler.delete(id);
         return ResponseBuilder.ok("Se ha eliminado correctamente la película.");

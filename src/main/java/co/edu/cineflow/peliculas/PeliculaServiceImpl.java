@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class PeliculaServiceImpl implements PeliculaService {
-
     private final PeliculaRepository peliculaRepository;
 
     public PeliculaServiceImpl(PeliculaRepository peliculaRepository) {
@@ -43,7 +42,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         PeliculaEntity existingPelicula = findById(id);
 
         if (peliculaRepository.existsByTituloAndIdNot(in.getTitulo(), id)) {
-            throw new BusinessException("Ya existe otra película registrada con ese título.");
+            throw new BusinessException("Ya existe una película registrada con ese título.");
         }
 
         existingPelicula.setTitulo(in.getTitulo());

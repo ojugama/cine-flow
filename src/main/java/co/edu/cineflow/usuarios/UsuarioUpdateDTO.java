@@ -13,14 +13,16 @@ import lombok.Setter;
 @Setter
 public class UsuarioUpdateDTO {
     @NotBlank(message = "El email es obligatorio.")
-    @Size(max = 50, message = "El email debe tener máximo 50 caracteres.")
+    @Size(max = 100, message = "El email debe tener máximo 100 caracteres.")
     @Email(message = "El email debe tener un formato válido.")
     private String email;
+
     @NotBlank(message = "Los nombres son obligatorios.")
     @Size(max = 100, message = "Los nombres deben tener máximo 100 caracteres.")
     @Pattern(regexp = "^(?!\\s)(?!.*\\s$)[A-Za-zÁÉÍÓÚáéíóúñÑ'\\- ]+$",
             message = "Los nombres solo pueden contener letras, espacios intermedios, apóstrofes y guiones.")
     private String nombres;
+
     @NotBlank(message = "Los apellidos son obligatorios.")
     @Size(max = 100, message = "Los apellidos deben tener máximo 100 caracteres.")
     @Pattern(regexp = "^(?!\\s)(?!.*\\s$)[A-Za-zÁÉÍÓÚáéíóúñÑ'\\- ]+$",

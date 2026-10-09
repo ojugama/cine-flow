@@ -15,21 +15,21 @@ public class UsuarioEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email")
+    @Column(name = "email", length = 100, nullable = false)
     private String email;
 
-    @Column(name = "password_hash")
+    @Column(name = "password_hash", length = 255, nullable = false)
     private String password;
 
-    @Column(name = "rol")
+    @Column(name = "rol", length = 50, nullable = false)
     private String rol;
 
-    @Column(name = "nombres")
+    @Column(name = "nombres", length = 100, nullable = false)
     private String nombres;
 
-    @Column(name = "apellidos")
+    @Column(name = "apellidos", length = 100, nullable = false)
     private String apellidos;
 
-    @Column(name = "is_activo")
+    @Column(name = "is_activo", nullable = false)
     private Boolean isActivo = true;
 }

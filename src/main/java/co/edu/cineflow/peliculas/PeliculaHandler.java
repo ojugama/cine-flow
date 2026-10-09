@@ -6,60 +6,35 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PeliculaHandler {
-
     private final PeliculaService peliculaService;
+    private final PeliculaMapper peliculaMapper;
 
-    public PeliculaHandler(PeliculaService peliculaService) {
+    public PeliculaHandler(PeliculaService peliculaService, PeliculaMapper peliculaMapper) {
         this.peliculaService = peliculaService;
+        this.peliculaMapper = peliculaMapper;
     }
 
     public PeliculaDTO create(PeliculaCreateDTO in) {
-        PeliculaEntity entity = toEntity(in);
-        return toDTO(peliculaService.create(entity));
+        PeliculaEntity entity = peliculaMapper.toEntity(in);
+
+        return peliculaMapper.toDTO(peliculaService.create(entity));
     }
 
     public PeliculaDTO findById(Long id) {
-        return toDTO(peliculaService.findById(id));
+        return peliculaMapper.toDTO(peliculaService.findById(id));
     }
 
     public Page<PeliculaDTO> findAll(Pageable pageable) {
-        return peliculaService.findAll(pageable).map(this::toDTO);
+        return peliculaService.findAll(pageable).map(peliculaMapper::toDTO);
     }
 
     public PeliculaDTO update(Long id, PeliculaUpdateDTO in) {
-        PeliculaEntity entity = toEntity(in);
-        return toDTO(peliculaService.update(id, entity));
+        PeliculaEntity entity = peliculaMapper.toEntity(in);
+
+        return peliculaMapper.toDTO(peliculaService.update(id, entity));
     }
 
     public void delete(Long id) {
         peliculaService.delete(id);
-    }
-
-    private PeliculaDTO toDTO(PeliculaEntity entity) {
-        PeliculaDTO dto = new PeliculaDTO();
-        dto.setId(entity.getId());
-        dto.setTitulo(entity.getTitulo());
-        dto.setSinopsis(entity.getSinopsis());
-        dto.setDuracionMinutos(entity.getDuracionMinutos());
-        dto.setGenero(entity.getGenero());
-        return dto;
-    }
-
-    private PeliculaEntity toEntity(PeliculaCreateDTO dto) {
-        PeliculaEntity entity = new PeliculaEntity();
-        entity.setTitulo(dto.getTitulo());
-        entity.setSinopsis(dto.getSinopsis());
-        entity.setDuracionMinutos(dto.getDuracionMinutos());
-        entity.setGenero(dto.getGenero());
-        return entity;
-    }
-
-    private PeliculaEntity toEntity(PeliculaUpdateDTO dto) {
-        PeliculaEntity entity = new PeliculaEntity();
-        entity.setTitulo(dto.getTitulo());
-        entity.setSinopsis(dto.getSinopsis());
-        entity.setDuracionMinutos(dto.getDuracionMinutos());
-        entity.setGenero(dto.getGenero());
-        return entity;
     }
 }
