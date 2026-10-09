@@ -27,7 +27,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     }
 
     @Override
-    public PeliculaEntity findById(Integer id) {
+    public PeliculaEntity findById(Long id) {
         return peliculaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Película no encontrada con ID " + id + "."));
     }
@@ -39,7 +39,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Override
     @Transactional
-    public PeliculaEntity update(Integer id, PeliculaEntity in) {
+    public PeliculaEntity update(Long id, PeliculaEntity in) {
         PeliculaEntity existingPelicula = findById(id);
 
         if (peliculaRepository.existsByTituloAndIdNot(in.getTitulo(), id)) {
@@ -56,7 +56,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Override
     @Transactional
-    public void delete(Integer id) {
+    public void delete(Long id) {
         PeliculaEntity existingPelicula = findById(id);
         peliculaRepository.delete(existingPelicula);
     }
