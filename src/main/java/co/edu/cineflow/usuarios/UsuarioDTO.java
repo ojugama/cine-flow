@@ -14,4 +14,5 @@ public class UsuarioDTO {
     private String nombres;
     private String apellidos;
     private Boolean isActivo;
+    private String token;
 }

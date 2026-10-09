@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "funciones")
 public class FuncionEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,11 +23,9 @@ public class FuncionEntity {
     @JoinColumn(name = "id_pelicula", nullable = false)
     private PeliculaEntity pelicula;
 
-    @NotNull(message = "El ID de la sala es requerido.")
     @Column(name = "id_sala", nullable = false)
     private Long idSala;
 
-    @NotNull(message = "La fecha y hora de inicio es requerida.")
     @Column(name = "fecha_hora_inicio", nullable = false)
     private LocalDateTime fechaHoraInicio;
 
@@ -36,6 +33,6 @@ public class FuncionEntity {
     @Column(name = "fecha_hora_fin", nullable = false)
     private LocalDateTime fechaHoraFin;
 
-    @Column(name = "is_activo")
+    @Column(name = "is_activo", nullable = false)
     private Boolean isActivo = true;
 }

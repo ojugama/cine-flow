@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 public class PeliculaServiceImpl implements PeliculaService {
-
     private final PeliculaRepository peliculaRepository;
 
     public PeliculaServiceImpl(PeliculaRepository peliculaRepository) {
@@ -28,13 +27,13 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Override
     public PeliculaEntity findById(Long id) {
-        return peliculaRepository.findById(id)
+        return peliculaRepository.findByIdAndIsActivoTrue(id)
                 .orElseThrow(() -> new NotFoundException("Película no encontrada con ID " + id + "."));
     }
 
     @Override
     public Page<PeliculaEntity> findAll(Pageable pageable) {
-        return peliculaRepository.findAll(pageable);
+        return peliculaRepository.findAllByIsActivoTrue(pageable);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         PeliculaEntity existingPelicula = findById(id);
 
         if (peliculaRepository.existsByTituloAndIdNot(in.getTitulo(), id)) {
-            throw new BusinessException("Ya existe otra película registrada con ese título.");
+            throw new BusinessException("Ya existe una película registrada con ese título.");
         }
 
         existingPelicula.setTitulo(in.getTitulo());
@@ -58,6 +57,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Transactional
     public void delete(Long id) {
         PeliculaEntity existingPelicula = findById(id);
-        peliculaRepository.delete(existingPelicula);
+        existingPelicula.setIsActivo(false);
+        peliculaRepository.save(existingPelicula);
     }
 }

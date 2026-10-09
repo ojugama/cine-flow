@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PeliculaCreateDTO {
-
     @NotBlank(message = "El título es obligatorio.")
     @Size(max = 100, message = "El título debe tener máximo 100 caracteres.")
     private String titulo;

@@ -8,7 +8,6 @@ import java.util.List;
 
 @Component
 public class FuncionHandler {
-
     private final FuncionService funcionService;
     private final FuncionMapper funcionMapper;
 

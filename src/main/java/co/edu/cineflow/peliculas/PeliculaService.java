@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PeliculaService {
-
     PeliculaEntity create(PeliculaEntity in);
 
     PeliculaEntity findById(Long id);

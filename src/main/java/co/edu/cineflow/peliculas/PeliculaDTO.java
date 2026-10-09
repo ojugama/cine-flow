@@ -13,4 +13,5 @@ public class PeliculaDTO {
     private String sinopsis;
     private Integer duracionMinutos;
     private String genero;
+    private Boolean isActivo;
 }

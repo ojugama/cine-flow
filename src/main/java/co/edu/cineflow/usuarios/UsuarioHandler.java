@@ -1,5 +1,6 @@
 package co.edu.cineflow.usuarios;
 
+import co.edu.cineflow.security.JwtUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -7,51 +8,33 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsuarioHandler {
     private final UsuarioService usuarioService;
+    private final UsuarioMapper usuarioMapper;
+    private final JwtUtil jwtUtil;
 
-    public UsuarioHandler(UsuarioService usuarioService) {
+    public UsuarioHandler(UsuarioService usuarioService, UsuarioMapper usuarioMapper, JwtUtil jwtUtil) {
         this.usuarioService = usuarioService;
-    }
-
-    private UsuarioDTO toDto(UsuarioEntity usuarioEntity) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-
-        usuarioDTO.setId(usuarioEntity.getId());
-        usuarioDTO.setEmail(usuarioEntity.getEmail());
-        usuarioDTO.setRol(usuarioEntity.getRol());
-        usuarioDTO.setNombres(usuarioEntity.getNombres());
-        usuarioDTO.setApellidos(usuarioEntity.getApellidos());
-        usuarioDTO.setIsActivo(usuarioEntity.getIsActivo());
-
-        return usuarioDTO;
+        this.usuarioMapper = usuarioMapper;
+        this.jwtUtil = jwtUtil;
     }
 
     public UsuarioDTO create(UsuarioCreateDTO in) {
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        UsuarioEntity usuarioEntity = usuarioMapper.toEntity(in);
 
-        usuarioEntity.setEmail(in.getEmail());
-        usuarioEntity.setPassword(in.getPassword());
-        usuarioEntity.setNombres(in.getNombres());
-        usuarioEntity.setApellidos(in.getApellidos());
-
-        return toDto(usuarioService.create(usuarioEntity));
+        return usuarioMapper.toDto(usuarioService.create(usuarioEntity));
     }
 
     public UsuarioDTO findById(Long id) {
-        return toDto(usuarioService.findById(id));
+        return usuarioMapper.toDto(usuarioService.findById(id));
     }
 
     public Page<UsuarioDTO> findAll(Pageable pageable) {
-        return usuarioService.findAll(pageable).map(this::toDto);
+        return usuarioService.findAll(pageable).map(usuarioMapper::toDto);
     }
 
     public UsuarioDTO update(Long id, UsuarioUpdateDTO in) {
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        UsuarioEntity usuarioEntity = usuarioMapper.toEntity(in);
 
-        usuarioEntity.setEmail(in.getEmail());
-        usuarioEntity.setNombres(in.getNombres());
-        usuarioEntity.setApellidos(in.getApellidos());
-
-        return toDto(usuarioService.update(id, usuarioEntity));
+        return usuarioMapper.toDto(usuarioService.update(id, usuarioEntity));
     }
 
     public void delete(Long id) {
@@ -59,17 +42,17 @@ public class UsuarioHandler {
     }
 
     public UsuarioDTO findMe(String email) {
-        return toDto(usuarioService.findByEmail(email));
+        return usuarioMapper.toDto(usuarioService.findByEmail(email));
     }
 
     public UsuarioDTO update(String email, UsuarioUpdateDTO in) {
-        UsuarioEntity usuarioEntity = new UsuarioEntity();
+        UsuarioEntity usuarioEntity = usuarioMapper.toEntity(in);
 
-        usuarioEntity.setEmail(in.getEmail());
-        usuarioEntity.setNombres(in.getNombres());
-        usuarioEntity.setApellidos(in.getApellidos());
+        UsuarioDTO usuarioDTO = usuarioMapper.toDto(usuarioService.update(email, usuarioEntity));
 
-        return toDto(usuarioService.update(email, usuarioEntity));
+        usuarioDTO.setToken(jwtUtil.generateToken(usuarioDTO.getEmail(), usuarioDTO.getRol()));
+
+        return usuarioDTO;
     }
 
     public void delete(String email) {

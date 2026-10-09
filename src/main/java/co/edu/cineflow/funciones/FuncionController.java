@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/funciones")
 public class FuncionController {
-
     private final FuncionHandler funcionHandler;
 
     public FuncionController(FuncionHandler funcionHandler) {
@@ -28,7 +27,7 @@ public class FuncionController {
         return ResponseBuilder.created("Se ha creado correctamente la función.", funcionHandler.create(in));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<FuncionDTO>> findById(@PathVariable Long id) {
         return ResponseBuilder.ok("OK", funcionHandler.findById(id));
     }
@@ -51,7 +50,7 @@ public class FuncionController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         funcionHandler.delete(id);
         return ResponseBuilder.ok("Se ha desactivado correctamente la función.");

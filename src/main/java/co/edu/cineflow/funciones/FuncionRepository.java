@@ -7,20 +7,22 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface FuncionRepository extends JpaRepository<FuncionEntity, Long> {
-
     Page<FuncionEntity> findAllByIsActivoTrue(Pageable pageable);
+
+    Optional<FuncionEntity> findByIdAndIsActivoTrue(Long id);
 
     List<FuncionEntity> findByPeliculaIdAndIsActivoTrue(Long idPelicula);
 
     @Query("""
-        SELECT COUNT(f) > 0 
-        FROM FuncionEntity f 
-        WHERE f.idSala = :idSala 
-          AND f.isActivo = true 
-          AND (:idFuncion IS NULL OR f.id != :idFuncion)
-          AND (f.fechaHoraInicio < :fin AND f.fechaHoraFin > :inicio)
-    """)
+                SELECT COUNT(f) > 0 
+                FROM FuncionEntity f 
+                WHERE f.idSala = :idSala 
+                  AND f.isActivo = true 
+                  AND (:idFuncion IS NULL OR f.id != :idFuncion)
+                  AND (f.fechaHoraInicio < :fin AND f.fechaHoraFin > :inicio)
+            """)
     boolean existeCruceHorario(Long idSala, LocalDateTime inicio, LocalDateTime fin, Long idFuncion);
 }
