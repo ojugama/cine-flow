@@ -12,6 +12,7 @@ public class PeliculaMapper {
         peliculaDTO.setSinopsis(peliculaEntity.getSinopsis());
         peliculaDTO.setDuracionMinutos(peliculaEntity.getDuracionMinutos());
         peliculaDTO.setGenero(peliculaEntity.getGenero());
+        peliculaDTO.setIsActivo(peliculaEntity.getIsActivo());
 
         return peliculaDTO;
     }

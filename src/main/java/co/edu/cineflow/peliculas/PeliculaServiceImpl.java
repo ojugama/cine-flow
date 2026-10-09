@@ -27,13 +27,13 @@ public class PeliculaServiceImpl implements PeliculaService {
 
     @Override
     public PeliculaEntity findById(Long id) {
-        return peliculaRepository.findById(id)
+        return peliculaRepository.findByIdAndIsActivoTrue(id)
                 .orElseThrow(() -> new NotFoundException("Película no encontrada con ID " + id + "."));
     }
 
     @Override
     public Page<PeliculaEntity> findAll(Pageable pageable) {
-        return peliculaRepository.findAll(pageable);
+        return peliculaRepository.findAllByIsActivoTrue(pageable);
     }
 
     @Override
@@ -57,6 +57,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     @Transactional
     public void delete(Long id) {
         PeliculaEntity existingPelicula = findById(id);
-        peliculaRepository.delete(existingPelicula);
+        existingPelicula.setIsActivo(false);
+        peliculaRepository.save(existingPelicula);
     }
 }

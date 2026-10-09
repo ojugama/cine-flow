@@ -26,4 +26,7 @@ public class PeliculaEntity {
 
     @Column(name = "genero", length = 100)
     private String genero;
+
+    @Column(name = "is_activo", nullable = false)
+    private Boolean isActivo = true;
 }
