@@ -18,7 +18,7 @@ public class AdminSeeder {
         return args -> {
             if (!usuarioRepository.existsByEmail("admin@cineflow.co")) {
                 UsuarioEntity admin = new UsuarioEntity();
-                admin.setEmail("admin@cineflow.edu.co");
+                admin.setEmail("admin@cineflow.co");
                 admin.setPassword(passwordEncoder.encode(adminPassword));
                 admin.setRol("ADMIN");
                 admin.setNombres("Administrador");
